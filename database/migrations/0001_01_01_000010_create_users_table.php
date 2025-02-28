@@ -24,10 +24,12 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->enum('gender',['male','female'])->nullable();
             $table->string('profile_pict')->nullable();
-            $table->enum('role',['super_admin','human_resource','employee','outlet'])->default('employee');
+            $table->enum('role',['super_admin','human_resource','outlet','employee'])->default('employee');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_city')->references('id')->on('cities')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
