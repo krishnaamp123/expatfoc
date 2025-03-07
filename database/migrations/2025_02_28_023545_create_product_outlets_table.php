@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_outlet');
             $table->bigInteger('product_price')->unsigned();
             $table->enum('is_active',['yes','no'])->default('yes');
+            $table->timestamp('disable_at')->nullable();
             $table->timestamps();
 
             $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade');

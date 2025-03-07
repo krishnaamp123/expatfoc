@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('user_departements', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->bigInteger('total_price')->unsigned();
-            $table->enum('status', ['sent', 'confirmed', 'done', 'rejected'])->default('sent');
-            $table->timestamp('scanned_at')->nullable();
+            $table->unsignedBigInteger('id_departement');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_departement')->references('id')->on('departements')->onDelete('cascade');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('user_departements');
     }
 };
