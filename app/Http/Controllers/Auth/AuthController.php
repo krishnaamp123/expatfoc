@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json([
                 'error' => 'Unauthorized. Please check your email and password'
             ], 401);
@@ -35,37 +36,44 @@ class AuthController extends Controller
         if ($user->role === 'super_admin') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Super Admin",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'human_resource') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Human Resource",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'user_admin') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as User Admin",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'partner') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Partner",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'manager') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Manager",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'supervisor') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Supervisor",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } elseif ($user->role === 'employee') {
             return response()->json([
                 "success" => "Access granted. You're successfully logged in as Employee",
-                "token" => $token
+                "token" => $token,
+                "user" => $user
             ], 200);
         } else {
             auth()->logout();
